@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define MAX_LINES 1000
-#define MAX_LEN 1024
+#define MAX_LEN 100000
 
 int main(int argc, char **argv){
 	
@@ -27,8 +27,8 @@ int main(int argc, char **argv){
 		input = fopen(argv[1], "r");
 		if (!input) {
 			
-			perror("Error al abrir archivo de entrada");
-			return 1;
+			fprintf(stderr,"error: cannot open file\n");
+			exit(1);
 		}
 		output = stdout;
 	}
@@ -37,22 +37,22 @@ int main(int argc, char **argv){
 		input = fopen(argv[1], "r");
 		if (!input) {
 			
-			perror("Error al abrir archivo de entrada");
-			return 1;
+			fprintf(stderr,"error: cannot open file\n");
+			exit(1);
 		}
 		
 		output = fopen(argv[2], "w");
 		if (!output) {
 			
-			perror("Error al abrir archivo de salida");
+			fprintf(stderr,"error: cannot open file\n");
 			fclose(input);
 			return 1;
 		}
 	}
 	else {
 		
-		fprintf(stderr, "Uso: %s [input] [output]\n", argv[0]);
-		return 1;
+		fprintf(stderr, "usage: reverse <input> <output>\n");
+		exit(1);
 	}
 	
 	
@@ -64,15 +64,13 @@ int main(int argc, char **argv){
 			break;
 		}
 		
-		int len = strlen(buffer);
-		
 		lines[count] = malloc(strlen(buffer) + 1);
 		if (!lines[count]) {
-			perror("Error de memoria");
-			return 1;
+			fprintf(stderr, "malloc failed\n");
+			exit(1);
 		}
 		
-		strncpy(lines[count], buffer, len + 1);
+		strcpy(lines[count], buffer);
 		
 		count++;
 	}
