@@ -80,6 +80,7 @@ int main(int argc, char **argv){
 	free(line);
 	
 	// se escribe las lineas al output que puede set stdout o un archivo
+	printf("Este es el resultado devuelto por el programa\n");
 	for (int i = count - 1; i >= 0; i--) {
 		if (lines[i]) {
 			fputs(lines[i], output);
